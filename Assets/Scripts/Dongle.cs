@@ -39,6 +39,7 @@ public class Dongle : MonoBehaviour
     public void Drag()
     {
         isDrag = true;
+        rigid.simulated = false;
     }
 
     public void Drop()
