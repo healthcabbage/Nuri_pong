@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 30;
+    }
+
+    void Start()
+    {
         NextDongle();
     }
 
@@ -24,7 +29,8 @@ public class GameManager : MonoBehaviour
     {
         Dongle newDongle = GetDongle();
         lastDongle = newDongle;
-
+        lastDongle.level = Random.Range(0, 8);
+        lastDongle.gameObject.SetActive(true);
         StartCoroutine(WaitNext());
     }
 

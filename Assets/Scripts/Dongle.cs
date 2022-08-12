@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class Dongle : MonoBehaviour
 {
+    public int level;
     public bool isDrag;
     Rigidbody2D rigid;
+    Animator anim;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
+
+    void OnEnable()
+    {
+        anim.SetInteger("Level", level);
     }
 
     void Update()
@@ -19,7 +27,7 @@ public class Dongle : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // x축 경계
             float leftBorder = -4.2f + transform.localScale.x / 2f;
-            float rightBorder = 4.2f + transform.localScale.x / 2f;
+            float rightBorder = 4.2f - transform.localScale.x / 2f;
 
             if (mousePos.x < leftBorder)
             {
