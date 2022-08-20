@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     public GameObject effectPrefab;
     public Transform effectGroup;
 
+    public int score;
     public int maxLevel;
+    public bool isOver;
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -23,10 +25,11 @@ public class GameManager : MonoBehaviour
 
     Dongle GetDongle()
     {
+        //이펙트 생성
         GameObject instantEffectObj = Instantiate(effectPrefab, effectGroup);
         ParticleSystem instantEffect = instantEffectObj.GetComponent<ParticleSystem>();
 
-
+        //동글 생성
         GameObject instantDongleObj = Instantiate(donglePrefab, dongleGroup);
         Dongle instantDongle = instantDongleObj.GetComponent<Dongle>();
         instantDongle.effect = instantEffect;
@@ -35,6 +38,10 @@ public class GameManager : MonoBehaviour
     
     void NextDongle()
     {
+        if(isOver)
+        {
+            return;
+        }
         Dongle newDongle = GetDongle();
         lastDongle = newDongle;
         lastDongle.manager = this;
@@ -73,5 +80,35 @@ public class GameManager : MonoBehaviour
 
         lastDongle.Drop();
         lastDongle = null;
+    }
+
+    public void GameOver()
+    {
+        if (isOver)
+        {
+            return;
+        }
+        isOver = true;
+
+        StartCoroutine("GameOverRoutine");
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        //1. 장면 안의 활성화된 모든 동글 가져오기
+        Dongle[] dongles = FindObjectsOfType<Dongle>();
+
+        // 2. 지우기 전에 모든 동글의 물리효과 비활성화
+         for (int index = 0; index < dongles.Length; index++)
+        {
+            dongles[index].rigid.simulated = false;
+        }       
+
+        //2. 1번의 목록을 하나씩 접근해서 지우기
+        for (int index = 0; index < dongles.Length; index++)
+        {
+            dongles[index].Hide(Vector3.up * 100);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 208693313}
   m_Layer: 0
   m_Name: "\uC120"
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1224,7 +1224,9 @@ MonoBehaviour:
   dongleGroup: {fileID: 183421249}
   effectPrefab: {fileID: 7989043431307965420, guid: cae5c7a421d55164f9920a3113e65edd, type: 3}
   effectGroup: {fileID: 917088791}
+  score: 0
   maxLevel: 2
+  isOver: 0
 --- !u!4 &1996281552
 Transform:
   m_ObjectHideFlags: 0
