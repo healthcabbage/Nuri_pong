@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public SoundManager smanager;
     public Dongle lastDongle;
     public GameObject donglePrefab;
     public Transform dongleGroup;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        smanager.BgmPlay(SoundManager.Bgm.MainGame);
         NextDongle();
     }
 
@@ -47,6 +49,8 @@ public class GameManager : MonoBehaviour
         lastDongle.manager = this;
         lastDongle.level = Random.Range(0, maxLevel);
         lastDongle.gameObject.SetActive(true);
+
+        smanager.SfxPlay(SoundManager.Sfx.Next);
         StartCoroutine(WaitNext());
     }
 
@@ -110,5 +114,9 @@ public class GameManager : MonoBehaviour
             dongles[index].Hide(Vector3.up * 100);
             yield return new WaitForSeconds(0.1f);
         }
+
+        yield return new WaitForSeconds(0.7f);
+
+        smanager.SfxPlay(SoundManager.Sfx.Over);
     }
 }

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Dongle : MonoBehaviour
 {
-    public GameManager manager;
+    public GameManager manager; 
     public ParticleSystem effect;
     public int level;
     public bool isDrag;
     public bool isMerge;
+    public bool isAttach;
 
     public Rigidbody2D rigid;
     CircleCollider2D circle;
@@ -63,6 +64,23 @@ public class Dongle : MonoBehaviour
     {
         isDrag = false;
         rigid.simulated = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        StartCoroutine("AttachRoutine");
+    }
+
+    IEnumerator AttachRoutine()
+    {
+        if(isAttach)
+        {
+            yield break;
+        }
+        isAttach = true;
+        manager.smanager.SfxPlay(SoundManager.Sfx.Attach);
+        yield return new WaitForSeconds(0.2f);
+        isAttach = false;
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -146,6 +164,7 @@ public class Dongle : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         anim.SetInteger("Level", level + 1);
         EffectPlay();
+        manager.smanager.SfxPlay(SoundManager.Sfx.LevelUp);
 
         yield return new WaitForSeconds(0.3f);
         level++;
