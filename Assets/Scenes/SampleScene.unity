@@ -1798,11 +1798,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smanager: {fileID: 314988142}
-  lastDongle: {fileID: 0}
   donglePrefab: {fileID: 8299383964266329703, guid: 1a6155eaea103ab4ab70acc8d78626ff, type: 3}
   dongleGroup: {fileID: 183421249}
+  donglePool: []
   effectPrefab: {fileID: 7989043431307965420, guid: cae5c7a421d55164f9920a3113e65edd, type: 3}
   effectGroup: {fileID: 917088791}
+  effectPool: []
+  poolSize: 3
+  poolCursor: 0
+  lastDongle: {fileID: 0}
   score: 0
   maxLevel: 0
   isOver: 0
