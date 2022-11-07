@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource[] BgmPlayer;
+    public static SoundManager instance;
+
+    public AudioSource BgmPlayer;
     public AudioClip[] bgmClip;
     public AudioSource[] sfxPlayer;
     public AudioClip[] sfxClip;
@@ -12,6 +14,18 @@ public class SoundManager : MonoBehaviour
 
     public enum Bgm { MainGame, StartScene, Stage };
     public enum Sfx { LevelUp, Next, Attach, Button, Over };
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            // 중복된 경우 오브젝트 제거
+            Destroy(gameObject);
+        
+        //씬이 변경되도 오브젝트가 삭제되지 않게 하기
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void SfxPlay(Sfx type)
     {
@@ -43,16 +57,15 @@ public class SoundManager : MonoBehaviour
         switch(type)
         {
             case Bgm.MainGame:
-                BgmPlayer[0].clip = bgmClip[0];
+                BgmPlayer.clip = bgmClip[0];
                 break;
             case Bgm.StartScene:
-                BgmPlayer[0].clip = bgmClip[1];
+                BgmPlayer.clip = bgmClip[1];
                 break;
             case Bgm.Stage:
-                BgmPlayer[0].clip = bgmClip[2];
+                BgmPlayer.clip = bgmClip[2];
                 break;
-        }
-        
-        BgmPlayer[0].Play();
+        }   
+        BgmPlayer.Play();
     }
 }

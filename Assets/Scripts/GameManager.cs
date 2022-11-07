@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("---------- [ Sound ] ")]
     public SoundManager smanager;
 
+    [Header("---------- [ Object Pooling ] ")]
     public GameObject donglePrefab;
     public Transform dongleGroup;
     public List<Dongle> donglePool;
@@ -19,9 +23,18 @@ public class GameManager : MonoBehaviour
     public int poolCursor;
     public Dongle lastDongle;
 
+    [Header(" ---------- [ Core ] ")]
     public int score;
     public int maxLevel;
     public bool isOver;
+
+    [Header(" ---------- [ UI ] ")]
+    public GameObject endGroup;
+    public Text scoreText;
+    public Text maxScoreText;
+    public Text subScoreText;
+    public GameObject StartGroup;
+    public GameObject SelectGroup;
 
     void Awake()
     {
@@ -33,12 +46,31 @@ public class GameManager : MonoBehaviour
         {
             MakeDonle();
         }
+
+        if (!PlayerPrefs.HasKey("MaxScore"))
+        {
+            PlayerPrefs.SetInt("MaxScore", 0);
+        }
+        maxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();
     }
 
     void Start()
     {
+        smanager.BgmPlay(SoundManager.Bgm.StartScene);
+    }
+
+    public void GameStart()
+    {
+        StartGroup.SetActive(false);
+        SelectGroup.SetActive(true);
+        smanager.BgmPlay(SoundManager.Bgm.Stage);
+    }
+
+    public void SelectStage()
+    {
+        SelectGroup.SetActive(false);
         smanager.BgmPlay(SoundManager.Bgm.MainGame);
-        NextDongle();
+        Invoke("NextDongle", 1.5f);
     }
 
     Dongle MakeDonle()
@@ -150,6 +182,32 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.7f);
 
+        //최고 점수 갱신    
+        int maxScore = Mathf.Max(score, PlayerPrefs.GetInt("MaxScore"));
+        PlayerPrefs.SetInt("MaxScore", maxScore);
+
+        //게임 오버 UI 표시
+        subScoreText.text = "점수 : " + scoreText.text;
+        endGroup.SetActive(true);
+
+        smanager.BgmPlayer.Stop();
         smanager.SfxPlay(SoundManager.Sfx.Over);
+    }
+
+    public void Reset()
+    {
+        smanager.SfxPlay(SoundManager.Sfx.Button);
+        StartCoroutine("ResetCoroutine");
+    }
+
+    IEnumerator ResetCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Main");
+    }
+
+    void LateUpdate()
+    {
+        scoreText.text = score.ToString();
     }
 }
