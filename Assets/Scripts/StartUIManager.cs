@@ -5,13 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class StartUIManager : MonoBehaviour
 {
-    void Awake()
-    {
-        SoundManager.instance.BgmPlay(SoundManager.Bgm.StartScene);
-    }
-
     public void stagemove()
     {
+        SoundManager.instance.SfxPlay(SoundManager.Sfx.Button);
         SceneManager.LoadScene("Select");
     }
 }

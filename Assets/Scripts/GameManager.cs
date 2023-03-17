@@ -56,20 +56,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        smanager.BgmPlay(SoundManager.Bgm.StartScene);
+        
     }
 
     public void GameStart()
     {
         StartGroup.SetActive(false);
         SelectGroup.SetActive(true);
-        smanager.BgmPlay(SoundManager.Bgm.Stage);
     }
 
     public void SelectStage()
     {
         SelectGroup.SetActive(false);
-        smanager.BgmPlay(SoundManager.Bgm.MainGame);
         Invoke("NextDongle", 1.5f);
     }
 

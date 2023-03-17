@@ -1,30 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
+    public AudioMixer mixer;
     public AudioSource BgmPlayer;
     public AudioClip[] bgmClip;
     public AudioSource[] sfxPlayer;
     public AudioClip[] sfxClip;
     int sfxCursor;
 
-    public enum Bgm { MainGame, StartScene, Stage };
     public enum Sfx { LevelUp, Next, Attach, Button, Over };
 
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
-        else if (instance != this)
-            // 중복된 경우 오브젝트 제거
+            DontDestroyOnLoad(instance);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        else
+        {
             Destroy(gameObject);
-        
-        //씬이 변경되도 오브젝트가 삭제되지 않게 하기
-        DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        for (int i = 0; i < bgmClip.Length; i++)
+        {
+            if(arg0.name == bgmClip[i].name)
+                BgSoundPlay(bgmClip[i]);
+        }
+
     }
 
     public void SfxPlay(Sfx type)
@@ -52,20 +66,22 @@ public class SoundManager : MonoBehaviour
         sfxCursor = (sfxCursor+1) % sfxPlayer.Length;
     }
 
-    public void BgmPlay(Bgm type)
+    public void BgSoundPlay(AudioClip clip)
     {
-        switch(type)
-        {
-            case Bgm.MainGame:
-                BgmPlayer.clip = bgmClip[0];
-                break;
-            case Bgm.StartScene:
-                BgmPlayer.clip = bgmClip[1];
-                break;
-            case Bgm.Stage:
-                BgmPlayer.clip = bgmClip[2];
-                break;
-        }   
+        BgmPlayer.outputAudioMixerGroup = mixer.FindMatchingGroups("BgSound")[0];
+        BgmPlayer.clip = clip;
+        BgmPlayer.loop = true;
+        BgmPlayer.volume = 1f;
         BgmPlayer.Play();
+    }
+
+    public void SetBgmVolume(float val)
+    {
+        mixer.SetFloat("BGSound", Mathf.Log10(val) * 20);
+    }
+
+    public void SetSFXVolume(float val)
+    {
+        mixer.SetFloat("SFX", Mathf.Log10(val) * 20);
     }
 }
