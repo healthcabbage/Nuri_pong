@@ -35,7 +35,7 @@ public class SelectUI : MonoBehaviour
 
     public void move()
     {
-        SceneManager.LoadScene("Start");
+        SceneManager.LoadScene("Stage");
     }
 
     void LoadValues()
@@ -58,4 +58,6 @@ public class SelectUI : MonoBehaviour
         PlayerPrefs.SetFloat("SFXValue", SFXValue);
         LoadValues();
     }
+
+    
 }

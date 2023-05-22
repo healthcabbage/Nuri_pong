@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("---------- [ Sound ] ")]
-    public SoundManager smanager;
-
     [Header("---------- [ Object Pooling ] ")]
     public GameObject donglePrefab;
     public Transform dongleGroup;
@@ -27,14 +24,16 @@ public class GameManager : MonoBehaviour
     public int score;
     public int maxLevel;
     public bool isOver;
+    public int nowStage;
+    public int startUISelect;
+    public GameObject stageStartGroup;
 
     [Header(" ---------- [ UI ] ")]
     public GameObject endGroup;
     public Text scoreText;
     public Text maxScoreText;
     public Text subScoreText;
-    public GameObject StartGroup;
-    public GameObject SelectGroup;
+    public GameObject[] startGroup;
 
     void Awake()
     {
@@ -52,23 +51,15 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("MaxScore", 0);
         }
         maxScoreText.text = PlayerPrefs.GetInt("MaxScore").ToString();
+
+        startUISelect = PlayerPrefs.GetInt("NowStage");
     }
 
     void Start()
     {
-        
-    }
-
-    public void GameStart()
-    {
-        StartGroup.SetActive(false);
-        SelectGroup.SetActive(true);
-    }
-
-    public void SelectStage()
-    {
-        SelectGroup.SetActive(false);
-        Invoke("NextDongle", 1.5f);
+        StartUI();
+        Invoke("NextDongle", 3.5f);
+        nowStage = PlayerPrefs.GetInt("levelReached");
     }
 
     Dongle MakeDonle()
@@ -113,7 +104,7 @@ public class GameManager : MonoBehaviour
         lastDongle.level = Random.Range(0, maxLevel);
         lastDongle.gameObject.SetActive(true);
 
-        smanager.SfxPlay(SoundManager.Sfx.Next);
+        SoundManager.instance.SfxPlay(SoundManager.Sfx.Next);
         StartCoroutine(WaitNext());
     }
 
@@ -157,7 +148,99 @@ public class GameManager : MonoBehaviour
         }
         isOver = true;
 
-        StartCoroutine("GameOverRoutine");
+        switch (nowStage)
+        {
+            case 0 :
+                if (score >= 50)
+                {
+                    if (nowStage == 0)
+                        nowStage = nowStage + 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");
+                break;
+            case 1 :
+                if (score >= 70)
+                {
+                    if (nowStage == 1)
+                        nowStage = nowStage + 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");
+                break;
+            case 2 :
+                if (score >= 90)
+                {
+                    if (nowStage == 2)
+                        nowStage = nowStage + 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");                
+                break;
+            case 3 :
+                if (score >= 110)
+                {
+                    if (nowStage == 3)
+                        nowStage += 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");                
+                break;
+            case 4 : 
+                if (score >= 130)
+                {
+                    if (nowStage == 4)
+                        nowStage += 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");
+                break;
+            case 5 : 
+                if (score >= 150)
+                {
+                    if (nowStage == 5)
+                        nowStage += 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");
+                break;
+            case 6 :
+                if (score >= 170)
+                {
+                    if (nowStage == 6)
+                        nowStage += 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");
+                break;
+            case 7 :
+                if (score >= 190)
+                {
+                    if (nowStage == 7)
+                        nowStage += 1;
+                    PlayerPrefs.SetInt("levelReached", nowStage);
+                    StartCoroutine("GameOverRoutine");
+                }
+                else
+                    StartCoroutine("GameOverRoutine");
+                break;
+        }
+
+        
     }
 
     IEnumerator GameOverRoutine()
@@ -188,13 +271,13 @@ public class GameManager : MonoBehaviour
         subScoreText.text = "점수 : " + scoreText.text;
         endGroup.SetActive(true);
 
-        smanager.BgmPlayer.Stop();
-        smanager.SfxPlay(SoundManager.Sfx.Over);
+        SoundManager.instance.BgmPlayer.Stop();
+        SoundManager.instance.SfxPlay(SoundManager.Sfx.Over);
     }
 
     public void Reset()
     {
-        smanager.SfxPlay(SoundManager.Sfx.Button);
+        SoundManager.instance.SfxPlay(SoundManager.Sfx.Button);
         StartCoroutine("ResetCoroutine");
     }
 
@@ -207,5 +290,97 @@ public class GameManager : MonoBehaviour
     void LateUpdate()
     {
         scoreText.text = score.ToString();
+    }
+
+    public void Selectreturn()
+    {
+        SoundManager.instance.SfxPlay(SoundManager.Sfx.Button);
+        StartCoroutine("ReturnCoroutine");
+    }
+
+    IEnumerator ReturnCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Select");
+    }
+
+    void StartUI()
+    {
+        if (startUISelect == 0)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 1)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 2)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 3)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 4)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 5)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 6)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+        else if (startUISelect == 7)
+        {
+            startGroup[startUISelect].gameObject.SetActive(true);
+            Invoke("FadeUI", 3f);
+        }
+    }
+
+    void FadeUI()
+    {
+        if (startUISelect ==  0)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 1)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 2)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 3)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 4)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 5)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 6)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
+        else if (startUISelect == 7)
+        {
+            startGroup[startUISelect].gameObject.SetActive(false);
+        }
     }
 }
