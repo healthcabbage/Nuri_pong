@@ -450,6 +450,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb3343bcb279e6c4ea5ec2df9230dfff, type: 3}
   - {fileID: 8300000, guid: 2efae418f7e6de647bfb4cf6564146c8, type: 3}
   - {fileID: 8300000, guid: 7f3b8ce12d19b864b99ebfe0c2d3450d, type: 3}
+  Bgmslider: {fileID: 2703694150075316515, guid: ed6159ba107c17d4c963412bb5f68503, type: 3}
+  Sfxslider: {fileID: 1999722908423592162, guid: 051556be9b63a624e85202039ace9c6f, type: 3}
 --- !u!1 &8009617392562125339
 GameObject:
   m_ObjectHideFlags: 0

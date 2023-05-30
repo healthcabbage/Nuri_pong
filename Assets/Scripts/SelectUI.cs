@@ -9,12 +9,9 @@ public class SelectUI : MonoBehaviour
     public GameObject SoundUI;
     public bool soundui = false;
 
-    public Slider Bgmslider;
-    public Slider Sfxslider;
-
     public void Start()
     {
-        LoadValues();
+
     }
 
     public void Soundui()
@@ -37,27 +34,4 @@ public class SelectUI : MonoBehaviour
     {
         SceneManager.LoadScene("Stage");
     }
-
-    void LoadValues()
-    {
-        float BGMValue = PlayerPrefs.GetFloat("BGMValue");
-        Bgmslider.value = BGMValue;
-        AudioListener.volume = BGMValue;
-
-        float SFXValue = PlayerPrefs.GetFloat("SFXValue");
-        Sfxslider.value = SFXValue;
-        AudioListener.volume = SFXValue;
-    }
-
-    public void SaveValues()
-    {
-        float BGMValue = Bgmslider.value;
-        PlayerPrefs.SetFloat("BGMValue", BGMValue);
-
-        float SFXValue = Sfxslider.value;
-        PlayerPrefs.SetFloat("SFXValue", SFXValue);
-        LoadValues();
-    }
-
-    
 }

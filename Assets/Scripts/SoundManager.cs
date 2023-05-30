@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class SoundManager : MonoBehaviour
     public AudioSource[] sfxPlayer;
     public AudioClip[] sfxClip;
     int sfxCursor;
+
+    float BGM;
+    float SFX;
+
+    public Slider Bgmslider;
+    public Slider Sfxslider;
 
     public enum Sfx { LevelUp, Next, Attach, Button, Over };
 
@@ -29,6 +36,11 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        LoadValues();
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -71,17 +83,32 @@ public class SoundManager : MonoBehaviour
         BgmPlayer.outputAudioMixerGroup = mixer.FindMatchingGroups("BgSound")[0];
         BgmPlayer.clip = clip;
         BgmPlayer.loop = true;
-        BgmPlayer.volume = 1f;
         BgmPlayer.Play();
     }
 
     public void SetBgmVolume(float val)
     {
         mixer.SetFloat("BGSound", Mathf.Log10(val) * 20);
+        PlayerPrefs.SetFloat("BGSound", val);
+        AudioListener.volume = val;
     }
 
     public void SetSFXVolume(float val)
     {
         mixer.SetFloat("SFX", Mathf.Log10(val) * 20);
+        PlayerPrefs.SetFloat("SFX", val);
+        AudioListener.volume = val;
+    }
+
+    public void LoadValues()
+    {
+        BGM = PlayerPrefs.GetFloat("BGSound");
+        Bgmslider.value = BGM;
+        AudioListener.volume = BGM;
+
+        SFX = PlayerPrefs.GetFloat("SFX");
+        Sfxslider.value = SFX;
+        AudioListener.volume = SFX;
+        Debug.Log("체크");
     }
 }
