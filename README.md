@@ -1,4 +1,7 @@
 # Nuri_pong[누리퐁]
+<p align="center">
+  <img src="https://github.com/healthcabbage/image/assets/49223403/3ad1c983-6bfb-4f1c-8b3c-909029433908">
+</p>
 
 ## 프로젝트 소개
 골드메탈님의 유튜브에서 물리퍼즐게임 동영상을 참조하여 유니티에서 제작된 게임입니다.   
