@@ -52,5 +52,5 @@
 [MenuPatten](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/MenuPatten.cs)   
 [StartUIManager](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/StartUIManager.cs)
 
-## 사운드
+### 사운드
 [SoundManager](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/SoundManager.cs)
