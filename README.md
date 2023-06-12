@@ -42,15 +42,15 @@
 [Dongle](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/Dongle.cs)
 
 ### 선택 씬
-[LevelClear](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/LevelClear.cs)
-[LevelLock](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/LevelLock.cs)
-[SelectUI](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/SelectUI.cs)
-[NowStage](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/NowStage.cs)
+[LevelClear](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/LevelClear.cs)   
+[LevelLock](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/LevelLock.cs)   
+[SelectUI](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/SelectUI.cs)   
+[NowStage](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/NowStage.cs)   
 [SwipeUI](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/SwipeUI.cs)
 
 ### 시작 씬
-[MenuPatten](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/MenuPatten.cs)
+[MenuPatten](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/MenuPatten.cs)   
 [StartUIManager](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/StartUIManager.cs)
 
 ## 사운드
-[SoundManager](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/SoundManager.cs]
+[SoundManager](https://github.com/healthcabbage/Nuri_pong/blob/main/Assets/Scripts/SoundManager.cs)
