@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     public bool isOver;
     public int nowStage;
     public int startUISelect;
-    public GameObject stageStartGroup;
 
     [Header(" ---------- [ UI ] ")]
     public GameObject endGroup;
